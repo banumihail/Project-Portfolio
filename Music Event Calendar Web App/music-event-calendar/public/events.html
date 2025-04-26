@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="events-container">
+        <h1>Upcoming Music Events</h1>
+        <ul id="event-list" class="event-list"></ul>
+        <button id="back-to-main-btn">Back to Main Page</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const eventList = document.getElementById('event-list');
+            const response = await fetch('/api/events');
+            const events = await response.json();
+            renderEvents(events);
+
+            function renderEvents(events) {
+                eventList.innerHTML = '';
+                events.forEach(event => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div>
+                            <strong>${event.name}</strong> - ${event.date}<br>
+                            Genre: ${event.genre}<br>
+                            Ticket Price: ${event.price}<br>
+                            Location: ${event.location}
+                        </div>
+                    `;
+                    eventList.appendChild(li);
+                });
+            }
+
+            document.getElementById('back-to-main-btn').addEventListener('click', () => {
+                window.location.href = 'main.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Common styles for the entire app */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: rgb(215, 35, 122);
+}
+
+/* Main page styles */
+.main-container {
+  background: url('images/bckg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.main-container h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.main-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-container input, .main-container select, .main-container button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.main-container input, .main-container select {
+  width: 200px;
+}
+
+.main-container button {
+  background-color: #4CAF50;
+  color: rgb(172, 55, 129);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.main-container button:hover {
+  background-color: #45a049;
+}
+
+.event-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.event-list li {
+  background: rgba(0, 0, 0, 0.5);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-list li div {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-list li button {
+  background-color: #f44336;
+  color: rgb(27, 145, 63);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.event-list li button:hover {
+  background-color: #d32f2f;
+}
+
+.events-container {
+  padding: 20px;
+  background: url('images/bckg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.events-container h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+#back-to-main-btn {
+  background-color: #4CAF50;
+  color: rgb(131, 89, 89);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#back-to-main-btn:hover {
+  background-color: #45a049;
+}

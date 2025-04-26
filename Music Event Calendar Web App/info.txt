@@ -1,0 +1,11 @@
+This is a web application that allows users to manage and explore music events through an interactive calendar interface.
+Users can sign up, log in, and add, edit, or delete events based on different genres.
+
+Technologies used:
+Frontend: HTML, CSS, JavaScript
+Backend: Node.js, Express.js
+Database: MongoDB
+
+Key Features:
+User authentication (Login/Signup system)
+Add, edit, and delete music events

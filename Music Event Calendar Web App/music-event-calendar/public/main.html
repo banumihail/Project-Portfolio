@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Welcome to the Music Event Calendar</h1>
+        <form id="event-form">
+            <input type="text" id="eventName" placeholder="Event Name" required>
+            <input type="date" id="eventDate" required>
+            <select id="eventGenre" required>
+                <option value="" disabled selected>Select Genre</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Rock">Rock</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Classical">Classical</option>
+                <option value="Pop">Pop</option>
+            </select>
+            <input type="text" id="ticketPrice" placeholder="Ticket Price" required>
+            <input type="text" id="eventLocation" placeholder="Location" required>
+            <button type="submit">Add Event</button>
+        </form>
+        <!--button id="display-events-btn">Display Events</button> -->
+        <ul id="event-list" class="event-list"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
