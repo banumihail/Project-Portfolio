@@ -1,0 +1,12 @@
+This project reads real-time temperature data using a DHT11 sensor and displays it on a 7-segment display using an Arduino.
+It involves sensor data acquisition, signal processing, and digital output control.
+
+Technologies used:
+Arduino (C/C++)
+DHT11 Temperature Sensor
+7-Segment Display
+
+Key Features:
+Real-time temperature readings
+Simple hardware wiring
+Basic display logic without external libraries
