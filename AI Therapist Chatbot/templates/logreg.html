@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Therapist - Login/Register</title>
+    <link rel="stylesheet" href="static/css/logreg.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div id="logo" class="logo"></div>
+        <h1 class="title" id="formTitle">Welcome Back</h1>
+        <p class="subtitle" id="formSubtitle">Sign in to continue your therapy journey</p>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="form-transition">
+            <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <input type="text" id="loginUsername" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <div class="password-toggle">
+                    <input type="password" id="loginPassword" class="form-input" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePassword('loginPassword')">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="submit-btn" id="loginBtn" onclick="handleLogin()">
+                <span id="loginBtnText">Sign In</span>
+                <div id="loginSpinner" class="loading-spinner"></div>
+            </button>
+
+            <p>Don't have an account? <a href="#" class="toggle-auth" onclick="switchToRegister()">Create one here</a>
+            </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="form-transition" style="display: none;">
+            <div class="form-group">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">Password (min. 6 characters)</label>
+                <div class="password-toggle">
+                    <input type="password" id="regPassword" class="form-input" required minlength="6">
+                    <button type="button" class="password-toggle-btn" onclick="togglePassword('regPassword')">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="submit-btn" id="registerBtn" onclick="handleRegister()">
+                <span id="registerBtnText">Create Account</span>
+                <div id="registerSpinner" class="loading-spinner"></div>
+            </button>
+
+            <p>Already have an account? <a href="#" class="toggle-auth" onclick="switchToLogin()">Sign in here</a></p>
+        </div>
+    </div>
+
+    <script>
+        let currentForm = 'login';
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function switchToRegister() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const title = document.getElementById('formTitle');
+            const subtitle = document.getElementById('formSubtitle');
+
+            loginForm.classList.add('fade-out');
+
+            setTimeout(() => {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                registerForm.classList.remove('fade-out');
+
+                title.textContent = 'Create Account';
+                subtitle.textContent = 'Join our supportive community today';
+                currentForm = 'register';
+
+                document.getElementById('regUsername').focus();
+            }, 300);
+
+            hideError();
+        }
+
+        function switchToLogin() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const title = document.getElementById('formTitle');
+            const subtitle = document.getElementById('formSubtitle');
+
+            registerForm.classList.add('fade-out');
+
+            setTimeout(() => {
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                loginForm.classList.remove('fade-out');
+
+                title.textContent = 'Welcome Back';
+                subtitle.textContent = 'Sign in to continue your therapy journey';
+                currentForm = 'login';
+
+                document.getElementById('loginUsername').focus();
+            }, 300);
+
+            hideError();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.display = 'none';
+        }
+
+        async function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('loginBtnText');
+            const spinner = document.getElementById('loginSpinner');
+
+            if (!username || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'block';
+            hideError();
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    window.location.href = data.redirect;
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+                console.error('Login error:', error);
+            } finally {
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }
+        }
+
+        async function handleRegister() {
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const btn = document.getElementById('registerBtn');
+            const btnText = document.getElementById('registerBtnText');
+            const spinner = document.getElementById('registerSpinner');
+
+            if (!username || !email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'block';
+            hideError();
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    window.location.href = data.redirect;
+                } else {
+                    showError(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+                console.error('Registration error:', error);
+            } finally {
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        currentForm === 'login' ? handleLogin() : handleRegister();
+                    }
+                });
+            });
+
+            document.getElementById('loginUsername').focus();
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.6/lottie.min.js"></script>
+    <script>
+        lottie.loadAnimation({
+            container: document.getElementById('logo'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: "{{ url_for('static', filename='animations/Lovely Cat.json') }}"
+        });
+    </script>
+</body>
+
+</html>
