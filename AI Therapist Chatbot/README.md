@@ -11,9 +11,9 @@ A web-based therapist-like chatbot using Flask and DeepSeek v3 for NLP. Provides
 - Built with Flask and Python backend
 
 ## Preview
-![Chat Screen](AI%20Therapist%20Chatbot/preview/mainchat.png)
-![Login Screen](AI%20Therapist%20Chatbot/preview/loginpage.png)
-![Register Screen](AI%20Therapist%20Chatbot/preview/registerpage.png)
+![Chat Screen](preview/mainchat.png)
+![Login Screen](preview/loginpage.png)
+![Register Screen](preview/registerpage.png)
 
 ## Technologies Used
 
